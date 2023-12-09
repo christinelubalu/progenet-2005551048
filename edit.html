@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>CRUD Biodata - Edit Data</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">CRUD Biodata</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="t1.html">Tambah Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="t2.html">Data Biodata</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Edit Data</h1>
+
+        <form id="editForm">
+            <div id="editBiodata"></div>
+            <button type="button" class="btn btn-warning" onclick="updateData()">Update</button>
+            <a href="t2.html" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+
+            if (index !== null) {
+                displayEditForm(index);
+            } else {
+                document.getElementById('editBiodata').innerHTML = '<p>Data tidak ditemukan.</p>';
+            }
+        });
+
+        function displayEditForm(index) {
+            const savedData = JSON.parse(localStorage.getItem('biodata')) || [];
+
+            if (index >= 0 && index < savedData.length) {
+                const biodata = savedData[index];
+                const editBiodata = document.getElementById('editBiodata');
+
+                editBiodata.innerHTML = `
+                    <div class="form-group">
+                        <label for="editNama">Nama:</label>
+                        <input type="text" class="form-control" id="editNama" name="editNama" value="${biodata.nama}">
+                    </div>
+                    <div class="form-group">
+                        <label for="editUmur">Umur:</label>
+                        <input type="number" class="form-control" id="editUmur" name="editUmur" value="${biodata.umur}">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAlamat">Alamat:</label>
+                        <input type="text" class="form-control" id="editAlamat" name="editAlamat" value="${biodata.alamat}">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email:</label>
+                        <input type="text" class="form-control" id="editEmail" name="editEmail" value="${biodata.email}">
+                    </div>
+                `;
+            } else {
+                document.getElementById('editBiodata').innerHTML = '<p>Data tidak ditemukan.</p>';
+            }
+        }
+
+        function updateData() {
+            // Implement your update logic here
+            alert('Data berhasil diperbarui!');
+            // Redirect back to t2.html
+            window.location.href = 't2.html';
+        }
+    </script>
+</body>
+
+</html>
