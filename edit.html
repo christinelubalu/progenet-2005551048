@@ -74,11 +74,29 @@
         }
 
         function updateData() {
-            // Implement your update logic here
+        const savedData = JSON.parse(localStorage.getItem('biodata')) || [];
+        const urlParams = new URLSearchParams(window.location.search);
+        const index = urlParams.get('index');
+
+        if (index !== null && index >= 0 && index < savedData.length) {
+            // Update the data
+            savedData[index].nama = document.getElementById('editNama').value;
+            savedData[index].umur = document.getElementById('editUmur').value;
+            savedData[index].alamat = document.getElementById('editAlamat').value;
+            savedData[index].email = document.getElementById('editEmail').value;
+
+            // Save the updated data back to local storage
+            localStorage.setItem('biodata', JSON.stringify(savedData));
+
+            // Inform the user
             alert('Data berhasil diperbarui!');
+
             // Redirect back to t2.html
             window.location.href = 't2.html';
+        } else {
+            alert('Data tidak ditemukan.');
         }
+    }
     </script>
 </body>
 
